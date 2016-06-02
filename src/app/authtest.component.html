@@ -2,15 +2,16 @@
   {{title}}
 </h1>
 <h3>
-  Login Status: {{ getUserStatus() }}
+  Login Status: {{ getUserStatus() }} 
 </h3>
 <h4 *ngIf="getUserStatus()">
-  User info: {{ getUserInfo() }}
+  User email: {{ getUserInfo() }}<br>
+  <span *ngIf="getUserPhoto()" ><img src="{{ getUserPhoto() }}"></span><br>
+  <button *ngIf="getUserStatus()" (click)="signOut()">Sign Out</button>
 </h4>
-<button *ngIf="!getUserStatus()" (click)="signIn()">Sign In</button>
-<button *ngIf="getUserStatus()" (click)="signOut()">Sign Out</button>
 <p>
-    <a *ngIf="getUserStatus()" [routerLink]="['/main']">Main</a><br>
-    <a *ngIf="!getUserStatus()" [routerLink]="['/login']">Log in</a>
+  <a *ngIf="getUserStatus()" [routerLink]="['/main']">Main</a>
+  <a *ngIf="!getUserStatus()" [routerLink]="['/login']">Log in</a>
 </p>
+
 <router-outlet></router-outlet>

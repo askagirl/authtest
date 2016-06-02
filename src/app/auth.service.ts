@@ -1,7 +1,7 @@
 declare var firebase: any;
 declare var app: any;
 declare var auth: any;
-declare var ui: any;
+// declare var ui: any;
 declare var firebaseui: any;
 
 import { Injectable } from '@angular/core';
@@ -27,35 +27,16 @@ export class AuthService {
    
     console.log('initializing firebase');
     var app = firebase.initializeApp(config);
+    
     console.log('initializing auth');
     var auth = app.auth();
-    if ( auth ) { console.log('Auth exists'); }
     
-    
-    
-    //    this.subscription = this.postService.getAll().subscribe(post => {
-    //   this.posts.push(post);
-    // });
-    
-    // Set observer to watch logged in status
-    // var user: any;
-    // firebase.auth().onAuthStateChanged(this.setUserStatus(user));
     
     this.userStatusObserver();
-    
   }
 
   userStatusObserver() {
     firebase.auth().onAuthStateChanged( this.toggleUser );
-    // firebase.auth().onAuthStateChanged( function(user) {
-    //   if (user) {
-    //     // User is signed in.
-    //     console.log('Observer detected user sign-in event.');
-    //   } else {
-    //     // No user is signed in.
-    //     console.log('Observer detected user sign-out event.');
-    //   }
-    // });
   }
 
   private toggleUser(user) {
@@ -123,17 +104,17 @@ export class AuthService {
     } else { return null; }
   }
 
-  signIn(){
-    firebase.auth().signInWithEmailAndPassword('mark@flegg.us', 'borshoes').catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-        console.log('Error signing in...');
-        console.log(error);
-      // ...
-    });
-    console.log('User signed in.');
-  }
+  // signIn(){
+  //   firebase.auth().signInWithEmailAndPassword('mark@flegg.us', 'borshoes').catch(function(error) {
+  //     // Handle Errors here.
+  //     var errorCode = error.code;
+  //     var errorMessage = error.message;
+  //       console.log('Error signing in...');
+  //       console.log(error);
+  //     // ...
+  //   });
+  //   console.log('User signed in.');
+  // }
 
   signOut(){
     firebase.auth().signOut().then(function() {

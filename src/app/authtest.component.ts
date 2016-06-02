@@ -4,7 +4,7 @@ import { MainComponent } from './+main';
 
 import { AuthService } from './auth.service';
 
-import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
+import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -20,12 +20,13 @@ import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 ])
 export class AuthtestAppComponent {
   
-  constructor( private _authService: AuthService ) {}
+  constructor( private _authService: AuthService, private _router: Router ) {}
   
   title = 'Firebase Auth Experiment';
   
   getUserStatus() {
-    return this._authService.getUserStatus();
+    var status = this._authService.getUserStatus();
+    return status;
   }
   
   getUserInfo() {
@@ -36,13 +37,20 @@ export class AuthtestAppComponent {
     } else { return 'No user'; }
     return userEmail;
   }
-  
-  signIn() {
-    this._authService.signIn();
-  }
-  
+    
   signOut() {
     this._authService.signOut();
+  }
+  
+  getUserPhoto() {
+    // console.log('getting user');
+    var user = this._authService.getUser();
+    if (user) {
+      console.log('PhotoURL: ' + user.photoURL);
+      var userPicUrl = user.photoURL;
+    } else { return 'no user'; }
+    // console.log('Got photo' + userPicUrl);
+    return userPicUrl;
   }
   
 }
