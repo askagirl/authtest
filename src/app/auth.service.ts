@@ -1,7 +1,6 @@
 declare var firebase: any;
 declare var app: any;
 declare var auth: any;
-// declare var ui: any;
 declare var firebaseui: any;
 
 import { Injectable } from '@angular/core';
@@ -11,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class AuthService {
   
   private userStatus = false;
+  public ui:any;
 
   constructor() {
     this.init();
@@ -47,6 +47,11 @@ export class AuthService {
         sessionStorage.setItem('userStatus', 'true');
         console.log('Stored status');
         console.log(user.email);
+        // console.log('Checking firebaseui status');
+        // if ( ui ) {
+        //   console.log('UI found. Destroying.');
+        //   ui = null;
+        // }
       } else {
         // No user is signed in.
         console.log('Observer detected user sign-out event.');
@@ -70,14 +75,15 @@ export class AuthService {
             // Do something.
             // Return type determines whether we continue the redirect automatically
             // or whether we leave that to developer to handle.
+            // sessionStorage.setItem('userStatus', 'true');
             console.log('User signed in succesfully.');
-            return true;
+            return true; // returning false in order to prevent redirect
           }
         }
       };
-      var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      ui.start('#firebaseui-auth-container', uiConfig);
-      return ui;
+      this.ui = new firebaseui.auth.AuthUI(firebase.auth());
+      this.ui.start('#firebaseui-auth-container', uiConfig);
+      return this.ui;
   }
   
   // private setUserStatus(status) {
@@ -96,12 +102,13 @@ export class AuthService {
   }
   
   getUser() {
-    if (this.getUserStatus()) {
-      var user = firebase.auth().currentUser;
-      // console.log(user);
-      // console.log(user.email);
-      return user;
-    } else { return null; }
+    // if (this.getUserStatus()) {
+    //   var user = firebase.auth().currentUser;
+    //   // console.log(user);
+    //   // console.log(user.email);
+    //   return user;
+    // } else { return null; }
+    return firebase.auth().currentUser;
   }
 
   // signIn(){
@@ -118,6 +125,7 @@ export class AuthService {
 
   signOut(){
     firebase.auth().signOut().then(function() {
+      sessionStorage.clear();
       console.log('User succesfully signed out.');
     }, function(error) {
       console.log('Error signing out...');

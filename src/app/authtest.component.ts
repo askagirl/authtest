@@ -34,7 +34,7 @@ export class AuthtestAppComponent {
     var user = this._authService.getUser();
     if (user) {
       var userEmail = user.email;
-    } else { return 'No user'; }
+    } else { return ''; }
     return userEmail;
   }
     
