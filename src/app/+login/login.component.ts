@@ -13,13 +13,7 @@ export class LoginComponent implements OnInit {
   constructor( private _authservice: AuthService ) {}
 
   ngOnInit() {
-    console.log('Starting firebaseui');
     this.ui = this._authservice.startFirebaseUI();
-    console.log('firebaseUI started');
-  }
-  
-  getUserStatus() {
-    return this._authservice.getUserStatus();
   }
 
 }

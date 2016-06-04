@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { LoginComponent } from './+login';
-import { MainComponent } from './+main';
 
 import { AuthService } from './auth.service';
 
-import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from '@angular/router';
+import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -15,8 +14,7 @@ import { Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from '@angular/ro
   providers: [ROUTER_PROVIDERS, AuthService]
 })
 @Routes([
-  {path: '/login', component: LoginComponent},
-  {path: '/main', component: MainComponent}
+  {path: '/login', component: LoginComponent}
 ])
 export class AuthtestAppComponent {
   
@@ -25,32 +23,32 @@ export class AuthtestAppComponent {
   title = 'Firebase Auth Experiment';
   
   getUserStatus() {
-    var status = this._authService.getUserStatus();
-    return status;
+    var status = this._authService.getUser();
+    if (status) {
+      return 'Logged in';
+    } else {
+      return 'Logged out';
+    }
   }
   
-  getUserInfo() {
-    // console.log('getting user');
+  getUserEmail() {
     var user = this._authService.getUser();
     if (user) {
       var userEmail = user.email;
     } else { return ''; }
     return userEmail;
   }
+  
+  getUserPhoto() {
+    var user = this._authService.getUser();
+    if (user) {
+      var userPicUrl = user.photoURL;
+    } else { return false; }
+    return userPicUrl;
+  }
     
   signOut() {
     this._authService.signOut();
-  }
-  
-  getUserPhoto() {
-    // console.log('getting user');
-    var user = this._authService.getUser();
-    if (user) {
-      console.log('PhotoURL: ' + user.photoURL);
-      var userPicUrl = user.photoURL;
-    } else { return 'no user'; }
-    // console.log('Got photo' + userPicUrl);
-    return userPicUrl;
   }
   
 }
