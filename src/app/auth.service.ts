@@ -1,15 +1,11 @@
 declare var firebase: any;
-// declare var app: any;
-// declare var auth: any;
 declare var firebaseui: any;
 
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class AuthService {
   
-  private userStatus = false;
   public ui:any;
 
   constructor() {
@@ -49,8 +45,20 @@ export class AuthService {
       }
   }
   
+  getUser() {
+    return firebase.auth().currentUser;
+  }
+
+  signOut(){
+    firebase.auth().signOut().then(function() {
+      console.log('User succesfully signed out.');
+    }, function(error) {
+      console.log('Error signing out...');
+      console.log(error);
+    });
+  }
   
-  public startFirebaseUI() {
+  startFirebaseUI() {
     console.log('Starting Firebase-ui');
     // FirebaseUI config.
       var uiConfig = {
@@ -75,18 +83,4 @@ export class AuthService {
       console.log('firebase-UI started');
       return this.ui;
   }
-  
-  getUser() {
-    return firebase.auth().currentUser;
-  }
-
-  signOut(){
-    firebase.auth().signOut().then(function() {
-      console.log('User succesfully signed out.');
-    }, function(error) {
-      console.log('Error signing out...');
-      console.log(error);
-    });
-  }
-  
 }
