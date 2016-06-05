@@ -63,7 +63,7 @@ export class AuthService {
     // FirebaseUI config.
       var uiConfig = {
         'siteName': 'experimentOne',
-        'signInSuccessUrl': '/',
+        'signInSuccessUrl': 'https://tptshoe.github.io/authtest/',
         'signInOptions': [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
           firebase.auth.FacebookAuthProvider.PROVIDER_ID,
