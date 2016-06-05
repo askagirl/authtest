@@ -1,0 +1,18 @@
+<h1>
+  {{title}}
+</h1>
+<h3>
+  Login Status: {{ getUserStatus() }} 
+</h3>
+<div *ngIf="getUserStatus() == 'Logged in'">
+  <h4>User email: {{ getUserEmail() }}</h4>
+  <p>
+    <span *ngIf="getUserPhoto()" ><img src="{{ getUserPhoto() }}"></span>
+  </p>
+  <button (click)="signOut()">Sign Out</button>
+</div>
+<p>
+  <a *ngIf="getUserStatus() == 'Logged out'" [routerLink]="['/login']">Log in</a>
+</p>
+
+<router-outlet></router-outlet>
